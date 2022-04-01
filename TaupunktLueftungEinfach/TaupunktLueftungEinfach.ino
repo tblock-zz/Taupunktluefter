@@ -1,5 +1,10 @@
-// Dieser Code benötigt zwingend die folgenden Libraries:
-#include "DHT.h"
+/*
+This code is without any warranty and without any liability of any kind.
+Be aware that the FAN may use high voltage and it is your responsibility to understand that wrong usage may damage 
+your life or your property.
+*/
+// These three libraries are necessary:
+#include "DHT.h"       // DHT sensor library from Adafruit
 #include <Wire.h> 
 #include <avr/wdt.h>
 
@@ -19,7 +24,7 @@
 #define CORRECTION_H_2   0.0f  // correction value for outer humidity
 
 #define MIN_DEW          5.0f // minimal dew point difference for switching the relais
-#define HYSTERESIS       1.0f // Abstand von Ein- und Ausschaltpunkt
+#define HYSTERESIS       1.0f // Distence for relais on/off switching
 #define MIN_TEMP_1      10.0f // minimal inner temperature for activating the venting
 #define MIN_TEMP_2     -10.0f // minimal outer temperature for activating the venting
 //-------------------------------------------------------------------------------------------------------
@@ -107,14 +112,14 @@ float calcDewPoint(float t, float r)
     b = 240.7f;
   }
   
-  // Sättigungsdampfdruck in hPa
-  float sdd = 6.1078f * pow(10.0f, (a*t)/(b+t));
+  // Saturated vapor pressure in hPa
+  float svp = 6.1078f * pow(10.0f, (a*t)/(b+t));
   
-  // Dampfdruck in hPa
-  float dd = sdd * (r/100.0f);
+  // Vapor pressure in hPa
+  float vp = svp * (r/100.0f);
   
   // v-Parameter
-  float v = log10(dd/6.1078f);
+  float v = log10(vp/6.1078f);
   
   // dew point temperature (°C)
   return (b*v) / (a-v);
