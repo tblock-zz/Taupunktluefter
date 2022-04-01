@@ -12,7 +12,7 @@ Der Code befindet sich im Verzeichnis TaupunktLueftungEinfach
 
 Teileliste:
 - 2 x Widerstand 10 kOhm
-- 2 x Widerstand 330 Ohm
+- 1 x Widerstand 330 Ohm
 - 2 x DHT22
 - 1 x Leuchtdiode rot
 - 1 x Leuchtdiode grün
