@@ -19,7 +19,7 @@ Teileliste:
 - 1 x Leuchtdiode rot
 - 1 x Leuchtdiode grün
 - 1 x Arduino Nano oder Arduino Uno etc.
-- 1 x Relaismodul mit 5V Ansgteuerung
+- 1 x Relaismodul mit 5V Ansteuerung
 - 1 x Lüfter 230 V
 
 Im Programm werden die Bibliotheken DHT sensor library von Adafruit und Sodaq_wdt verwendet.
