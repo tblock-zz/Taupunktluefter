@@ -9,6 +9,7 @@ Das Original Github Projekt liegt hier: https://github.com/MakeMagazinDE/Taupunk
 
 Der Code befindet sich im Verzeichnis TaupunktLueftungEinfach
 ![Taupunktluefter](./Taupunktlueftung.png)
+![Schaltplan](./Schematic.png)
 
 Teileliste:
 - 2 x Widerstand 10 kOhm
