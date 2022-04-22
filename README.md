@@ -5,7 +5,9 @@ Das Original Github Projekt liegt hier: https://github.com/MakeMagazinDE/Taupunk
 
 # Taupunktlüfter
 
-**Der Zweig vom Original ist bewusst absolut einfach gehalten. Er besitzt nur noch eine vereinfachte Anzeige mit 2 LEDs. Rot für Fehler und grün für ordnungsgemäßen Betrieb. **
+Der Zweig vom Original ist bewusst absolut einfach gehalten. Er besitzt nur noch eine vereinfachte Anzeige mit 2 LEDs. Rot für Fehler und grün für ordnungsgemäßen Betrieb. 
+Allerdings habe ich die C++ Datei verändert. Einmal wird ein gelitender Mittelwert aus der Temperatur und der Luftfeuchtigkeit gebildet mit einer Probe alle 1s. 
+Nach 5s wird dann die Taupunktberechnung ausgeführt und entsprechend das Relais geschaltet.
 
 Der Code befindet sich im Verzeichnis TaupunktLueftungEinfach
 ![Taupunktluefter](./Taupunktlueftung.png)
