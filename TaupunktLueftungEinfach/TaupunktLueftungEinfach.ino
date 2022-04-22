@@ -9,8 +9,8 @@ your life or your property.
 #include <avr/wdt.h>
 
 //-------------------------------------------------------------------------------------------------------
-#define PIN_RELAIS          6 // air venting relais control pin
-#define PIN_DHT1            5 // data line inner DHT sensor
+#define PIN_RELAIS          5 // air venting relais control pin
+#define PIN_DHT1            6 // data line inner DHT sensor
 #define PIN_DHT2            4 // data line outer DHT sensor
 #define PIN_LED_OK         11
 #define PIN_LED_ERR        12
@@ -20,12 +20,12 @@ your life or your property.
 
 #define CORRECTION_T_1  -3.0f // correction value for inner temperature
 #define CORRECTION_T_2  -4.0f // correction value for outer temperature
-#define CORRECTION_H_1   0.0f  // correction value for inner humidity
-#define CORRECTION_H_2   0.0f  // correction value for outer humidity
+#define CORRECTION_H_1   0.0f // correction value for inner humidity
+#define CORRECTION_H_2   0.0f // correction value for outer humidity
 
 #define MIN_DEW          5.0f // minimal dew point difference for switching the relais
 #define HYSTERESIS       1.0f // Distence for relais on/off switching
-#define MIN_TEMP_1      10.0f // minimal inner temperature for activating the venting
+#define MIN_TEMP_1      14.0f // minimal inner temperature for activating the venting
 #define MIN_TEMP_2     -10.0f // minimal outer temperature for activating the venting
 //-------------------------------------------------------------------------------------------------------
 typedef struct {
@@ -53,7 +53,7 @@ void initHmi()
   Serial.println(F("Testing sensors.."));
 }
 
-void printHmi(tFiltered& inner, tFiltered& outer)
+void printHmi(tFiltered& inner, tFiltered& outer, bool relaisOn)
 {
   static const char txtSensor1[]     = "Sensor 1: ";
   static const char txtSensor2[]     = "Sensor 2: ";
@@ -82,6 +82,7 @@ void printHmi(tFiltered& inner, tFiltered& outer)
   Serial.print(txtDewPoint);
   Serial.print(outer.dp);
   Serial.println(txtUnitCelsius);
+  Serial.print("Relais:"); Serial.println(relaisOn ? "ON" : "OFF");
   Serial.println();
 #endif
 }
@@ -91,6 +92,7 @@ void signalError()
   digitalWrite(PIN_LED_ERR, HIGH); 
   digitalWrite(PIN_LED_OK , LOW); 
   digitalWrite(PIN_RELAIS , RELAIS_OFF); 
+  Serial.println("Error");
 }
 
 void signalOk()
@@ -226,7 +228,6 @@ void loop()
       relais = relais || (r.avrg.hmdty > 100.0f) || (r.avrg.hmdty < 1.0f);
       relais = relais || (r.avrg.tmprt < -40.0f) || (r.avrg.tmprt > 80.0f);
     }
-    printHmi(data[0], data[1]);
     relais = !relais; // set relais when in allowed range
     if(relais) {
       for(auto i=0; i<2; ++i) {
@@ -247,6 +248,7 @@ void loop()
               (data[1].avrg.tmprt >= MIN_TEMP_2);
     }
     relaisState = relais;
+    printHmi(data[0], data[1], relais);
     digitalWrite(PIN_RELAIS, relais ? RELAIS_ON : RELAIS_OFF);
   }
 }
